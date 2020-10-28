@@ -2,6 +2,7 @@
 
 Much of this module is a combination/wrapper around Python's stdlib `math` and `cmath` modules. However, the following functions are not copied over:
 
+- Any `math.*` function with a `cmath` counterpart.
 - `math.copysign`
 - `math.fabs`
 - `math.fmod`
@@ -20,6 +21,7 @@ Much of this module is a combination/wrapper around Python's stdlib `math` and `
 - `math.log1p` and `math.log2`, though their behavior is absorbed into `lmath.log`
 - `math.log10` and `cmath.log10`, though their behavior is absorbed into `lmath.log`
 - `math.pow`
+- `math.lgamma`
 
 In addition, the following functions are renamed:
 
@@ -41,6 +43,14 @@ The following functions have different behavior:
 - `math.atan2` vs. `lmath.arctan(z: Real, a: Real)`: The former outputs angles on [-π, π]; the latter outputs angles on [0, 2π).
 - `math.dist` vs. `lmath.distance`: The former requires the two points to have the same dimension; the latter allows points with mismatched dimensions by right-padding the shorter vector with zeros.
 - `cmath.log` vs. `lmath.log`: The latter delegates to `math.log1p`, `math.log2`, `cmath.log10`, or `cmath.log` depending on the arguments. This is in an effort to maintain precision while also maintaining generality.
+
+There are a few new functions:
+
+- `lmath.realcast`
+- `lmath.ANGLE_MODE` (a string) and `lmath.force_angle_mode` (a function/context manager)
+- `lmath.accept_angle` and `lmath.output_angle`, which use `ANGLE_MODE` to accept/output angles of the desired type (degrees vs. radians)
+- `lmath.roots_of_unity`
+- `lmath.normdist_pdf` and `lmath.normdist_cdf`, which give the PDF and CDF for the normal distribution
 
 ## Constants
 
@@ -195,13 +205,13 @@ This decorator allows `sqrt_cast` to always have the "power" of `cmath.sqrt` but
 
 Return the phase (a.k.a. the argument) of z, as a float.
 
-Defers to `cmath.phase`, except the result of `lmath.phase` lies on [0, 2π) instead of [-π, π]!
+Defers to `cmath.phase`, except the result of `lmath.phase` lies on [0, 2π) instead of [-π, π].
 
 Even on systems with support for signed zeros, `lmath.phase(complex(1.0, -0.0)) == 0.0`.
 
 ### `lmath.polar(z: Complex) -> Tuple[float, float]`
 
-Return the representation of *z* in polar coordinates. Returns a namedtuple pair `Polar(modulus, phase)`, where *modulus* is the modulus (absolute value) of *z* and *phase* is its phase. As with `lmath.phase(z)`, this phase is reported on [0, π).
+Return the representation of *z* in polar coordinates. Returns a namedtuple pair `Polar(modulus, phase)`, where *modulus* is the modulus (absolute value) of *z* and *phase* is its phase. As with `lmath.phase(z)`, this phase is reported on [0, 2π).
 
 ### `lmath.cartesian(modulus: float, phase: float, *, angle_mode: str = 'radians') -> Complex`
 
