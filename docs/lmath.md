@@ -244,7 +244,7 @@ def sin(z):
 
 A string that determines which angle mode is used for any trigonometric calculation. It should be one of `"RADIANS"` and `"DEGREES"` (though capitalization is ignored). It can also be temporarily set using `lmath.force_angle_mode`.
 
-### `lmath.force_angle_mode(radians=False)`
+### `lmath.force_angle_mode(temp_mode: str)`
 
 A context manager that locally overrides/forces the angle mode to the given mode.
 
