@@ -440,10 +440,10 @@ Defers to `math.gamma`.
 
 ### `lmath.normdist_pdf(x: Real, mu: Real = 0.0, sigma: Real = 1.0) -> Real`
 
-Return the probability density function at *x* for the normal distribution. The default parameters (μ=0, σ=1) give the standard normal distribution.
+Return the probability density function at *x* for the [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). The default parameters (μ=0, σ=1) give the standard normal distribution.
 
 ### `lmath.normdist_cdf(x: Real, mu: Real = 0.0, sigma: Real = 1.0) -> Real`
 
-Return the cumulative distribution function at *x* for the normal distribution. The default parameters (μ=0, σ=1) give the standard normal distribution.
+Return the cumulative distribution function at *x* for the [normal distribution](https://en.wikipedia.org/wiki/Normal_distribution). The default parameters (μ=0, σ=1) give the standard normal distribution.
 
 In particular, `normdist_cdf(x, mu, sigma)` gives the probability that a measurement from a normal distribution with mean *mu* and standard deviation *sigma* is less than *x*. The probability that *a < x < b* is calculated as `normdist(b, ...) - normdist(a, ...)`.
